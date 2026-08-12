@@ -14,22 +14,22 @@ metadata:
   name: nodejsapp-deployment
   namespace: nodejsapp
   labels:
-    app: "nodejsapp"
+    app: nodejsapp
 spec:
-  replicas: 3 
+  replicas: 3
   selector:
     matchLabels:
-      app: "nodejsapp"
+      app: nodejsapp
   template:
     metadata:
       labels:
-        app: "nodejsapp"
+        app: nodejsapp
     spec:
       containers:
         - name: nodejs-container
           image: nimeelakor/nodejsimage:v1
           ports:
-            - containerPort: 3000
+            - containerPort: 3000   # matches your Alpine Node.js app
           env:
             - name: ENVIRONMENT
               value: "production"
@@ -47,14 +47,13 @@ metadata:
   name: nodejsapp-service
   namespace: nodejsapp
   labels:
-    app: "nodejsapp"
+    app: nodejsapp
 spec:
   selector:
-    app: "nodejsapp"  
-   type:NodePort
+    app: nodejsapp
+  type: LoadBalancer
   ports:
-    - name: nodejsapp-port
+    - name: http
       port: 80
       targetPort: 3000
       nodePort: 30001
-       
